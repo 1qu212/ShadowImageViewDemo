@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        renderscriptTargetApi 28
+        renderscriptSupportModeEnabled true
+    }
+}
+ext {
+    publishedGroupId = rootProject.publishedGroupId //引用时的第一部分
+    artifact = 'shadowimageview'//引用时的第二部分
+    libraryVersion = '1.0.0'//引用时的第三部分
+    libraryName = 'shadowimageview'//本module名称
+    bintrayName = 'shadowimageview'//Jcenter 上显示的项目名
+
+    bintrayRepo = rootProject.bintrayRepo
+    libraryDescription = rootProject.libraryDescription
+
+    siteUrl =rootProject.siteUrl
+    gitUrl = rootProject.gitUrl
+
+    developerId = rootProject.developerId
+    developerName =rootProject.developerName
+    developerEmail = rootProject.developerEmail
+
+    licenseName = rootProject.licenseName
+    licenseUrl = rootProject.licenseUrl
+    allLicenses = rootProject.allLicenses
+
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
