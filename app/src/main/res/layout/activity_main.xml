@@ -9,7 +9,7 @@
     <cn.xydzjnq.shadowimageview.ShadowImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/pic"
+        android:src="@drawable/pic1"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
