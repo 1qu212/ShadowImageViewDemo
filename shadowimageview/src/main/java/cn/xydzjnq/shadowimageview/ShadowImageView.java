@@ -59,13 +59,16 @@ public class ShadowImageView extends ImageView {
         }
     }
 
-    @Override
-    public void setImageBitmap(Bitmap bm) {
+    interface SetImage {
+        abstract void perform();
+    }
+
+    private void setImage(SetImage setImage) {
         if (getHeight() != 0 && getMeasuredHeight() != 0) {
-            super.setImageBitmap(bm);
+            setImage.perform();
             makeBlurShadow();
         } else {
-            super.setImageBitmap(bm);
+            setImage.perform();
             getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
@@ -78,39 +81,33 @@ public class ShadowImageView extends ImageView {
     }
 
     @Override
-    public void setImageResource(int resId) {
-        if (getHeight() != 0 && getMeasuredHeight() != 0) {
-            super.setImageResource(resId);
-            makeBlurShadow();
-        } else {
-            super.setImageResource(resId);
-            getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    getViewTreeObserver().removeOnPreDrawListener(this);
-                    makeBlurShadow();
-                    return false;
-                }
-            });
-        }
+    public void setImageBitmap(final Bitmap bm) {
+        setImage(new SetImage() {
+            @Override
+            public void perform() {
+                ShadowImageView.super.setImageBitmap(bm);
+            }
+        });
     }
 
     @Override
-    public void setImageDrawable(Drawable drawable) {
-        if (getHeight() != 0 && getMeasuredHeight() != 0) {
-            super.setImageDrawable(drawable);
-            makeBlurShadow();
-        } else {
-            super.setImageDrawable(drawable);
-            getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    getViewTreeObserver().removeOnPreDrawListener(this);
-                    makeBlurShadow();
-                    return false;
-                }
-            });
-        }
+    public void setImageResource(final int resId) {
+        setImage(new SetImage() {
+            @Override
+            public void perform() {
+                ShadowImageView.super.setImageResource(resId);
+            }
+        });
+    }
+
+    @Override
+    public void setImageDrawable(final Drawable drawable) {
+        setImage(new SetImage() {
+            @Override
+            public void perform() {
+                ShadowImageView.super.setImageDrawable(drawable);
+            }
+        });
     }
 
     public void setImageResource(int resId, boolean withShadow) {
